@@ -1,24 +1,11 @@
-import axios from 'axios';
 import React from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import './App.css';
 import Login from './components/Login';
+import FriendsList from './components/FriendsList'
+import PrivateRoute from './components/PrivateRoute'
 
 function App() {
-
-  const logout = () => {
-    axios.post('http://localhost:5000/api/logout', {
-      headers: {
-        authenticaton: localStorage.getItem('token')
-      }
-    })
-    .then(res => { 
-      console.log(res)
-    })
-    .catch(err => {
-      console.log('App error: ', err)
-    })
-  }
 
   return (
     <div className="App">
@@ -27,12 +14,9 @@ function App() {
           <li>
             <Link to='/login'>Login</Link>
           </li>
-          <li>
-            <Link onClick={logout}>Logout</Link>
-          </li>
         </ul>
       <Switch>
-        <Route exact path='/protected'/>
+        <PrivateRoute exact path='/friends' component={FriendsList}/>
         <Route path='/login' component={Login}/>
         <Route component={Login}/>
       </Switch>

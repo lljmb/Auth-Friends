@@ -7,11 +7,11 @@ const initialValues = {
     password: ''
 }
 
-
-
 const Login = () => {
+    // setting the inital state of credentials
     const [credentials, setCredentials] = useState(initialValues)
 
+    // change handler that loads changes to form
     const handleChange = e => {
         setCredentials({
                 ...credentials, 
@@ -20,6 +20,8 @@ const Login = () => {
         )
     }
 
+    // login function using useHistory provided by re-ro-dom
+    // linked to login button & uses axios to submit post req
     const history = useHistory();
 
     const login = e => {
@@ -27,7 +29,7 @@ const Login = () => {
         axios.post('http://localhost:5000/api/login', credentials)
         .then(res => {
             localStorage.setItem('token', res.data.payload);
-            history.push('/protected');
+            history.push('/friends');
         })
         .catch(err => {
             console.log('Login error: ', err)
@@ -35,6 +37,7 @@ const Login = () => {
     }
 
     return (
+        // simple form that takes a username & password
         <>
         <form onSubmit={login}>
             <input 
@@ -46,7 +49,7 @@ const Login = () => {
             <input 
              type='password'
              name='password'
-             value={setCredentials.username}
+             value={setCredentials.password}
              onChange={handleChange} 
             />
             <button>Log In</button>
