@@ -3,12 +3,13 @@ import { axiosWithAuth } from '../utils/axiosWithAuth'
 
 const initialValues = {
     id: Date.now(),
-    newName: '',
+    name: '',
     age: '',
     email: ''
 }
 
-const AddFriend = () => {
+// pass the setFriends state as a prop in order to render friends on page
+const AddFriend = ({setFriends}) => {
     const [newFriend, setNewFriend] = useState(initialValues)
 
     const submit = e => {
@@ -17,11 +18,11 @@ const AddFriend = () => {
         .post('http://localhost:5000/api/friends', newFriend)
         .then(res => {
             console.log(res)
+            setFriends(res.data)
         })
         .catch(err => {
             console.log('Add Friend error: ', err)
         })
-        
     }
     
     const handleChange = e => {
@@ -33,22 +34,22 @@ const AddFriend = () => {
          <form onSubmit={submit}>
             <input 
              type='text'
-             name='newName'
-             value={setNewFriend.newName}
+             name='name'
+             value={newFriend.name}
              onChange={handleChange} 
              placeholder='enter a name'
             />
             <input 
              type='number'
              name='age'
-             value={setNewFriend.age}
+             value={newFriend.age}
              onChange={handleChange} 
              placeholder='enter their age'
             />
             <input 
              type='text'
              name='email'
-             value={setNewFriend.email}
+             value={newFriend.email}
              onChange={handleChange} 
              placeholder='enter their email'
             />

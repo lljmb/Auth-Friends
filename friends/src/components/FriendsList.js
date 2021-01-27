@@ -33,7 +33,7 @@ const FriendsList = () => {
         <h2>Friends!</h2>
         {
             friends.map(friend => (
-                <div>
+                <div key={friend.id}>
                 <p>Name: {friend.name}</p>
                 <p>Age: {friend.age}</p>
                 <p>Email: {friend.email}</p>
@@ -41,7 +41,8 @@ const FriendsList = () => {
             ))
         }
         <h3>How Many of Us Have Them?</h3>
-        <AddFriend />
+        {/* link setFriends prop to setFriends state */}
+        <AddFriend setFriends={setFriends}/>
         </>
     )
 }
